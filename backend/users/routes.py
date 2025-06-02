@@ -1,7 +1,6 @@
 from fastapi import APIRouter, HTTPException, Path, Depends
 from models import UserIn
 from .crud import create_user_db, list_users_db, get_user_db, delete_user_db
-from auth.dependencies import get_current_user
 
 users_router = APIRouter(prefix="/users", tags=["users"])
 
@@ -12,7 +11,7 @@ def create_user(user: UserIn):
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-@users_router.get("/", dependencies=[Depends(get_current_user)])
+@users_router.get("/")
 def list_users():
     return list_users_db()
 
@@ -25,7 +24,7 @@ def get_user(user_id: str = Path(...)):
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
     
-@users_router.delete("/{user_id}", dependencies=[Depends(get_current_user)])
+@users_router.delete("/{user_id}")
 def delete_user(user_id: str = Path(...)):
     try:
         return delete_user_db(user_id)
