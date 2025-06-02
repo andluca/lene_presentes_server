@@ -1,9 +1,9 @@
 from fastapi import FastAPI, Request
 from starlette.responses import JSONResponse
-from auth.jwt import verify_token
-from auth.routes import auth_router
-from users.routes import users_router
-from products.routes import products_router
+from backend.auth.jwt import verify_token
+from backend.auth.routes import auth_router
+from backend.users.routes import users_router
+from backend.products.routes import products_router
 
 app = FastAPI()
 

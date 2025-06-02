@@ -29,3 +29,5 @@ env/
 # macOS system files
 .DS_Store
 .env
+
+history.sql

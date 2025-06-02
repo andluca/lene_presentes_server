@@ -1,24 +1,36 @@
-from fastapi import APIRouter, HTTPException, Path
-from models import ProductIn
+from fastapi import APIRouter, HTTPException, Path, UploadFile, File, Form
+from backend.models import ProductOut, ProductInDB
 from .crud import create_product_db, list_products_db, get_product_db, delete_product_db, delete_all_products_db, update_product_db
+import cloudinary.uploader
 
 products_router = APIRouter(prefix="/products", tags=["products"])
 
-@products_router.post("/")
-def create_product(product: ProductIn):
+@products_router.post("/", response_model=ProductOut)
+def create_product(category: str = Form(...), name: str = Form(...), price: float = Form(...), description: str = Form(None),image: UploadFile = File(...)):
     try:
-        return create_product_db(product)
+        upload_result = cloudinary.uploader.upload(image.file)
+        image_url = upload_result['secure_url']
+
+        novo_produto = ProductInDB(
+            category=category,
+            name=name,
+            price=price,
+            description=description,
+            image_url=image_url
+        )
+
+        return create_product_db(novo_produto)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-@products_router.get("/", response_model=list[ProductIn])
+@products_router.get("/", response_model=list[ProductOut])
 def list_products():
     try:
         return list_products_db()
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-@products_router.get("/{product_id}", response_model=ProductIn)
+@products_router.get("/{product_id}", response_model=ProductOut)
 def get_product(product_id: str = Path(...)):
     try:
         return get_product_db(product_id)
@@ -44,7 +56,7 @@ def delete_all_products():
         raise HTTPException(status_code=400, detail=str(e))
     
 @products_router.patch("/{product_id}")
-def update_product(product_id: str, product: ProductIn):
+def update_product(product_id: str, product: ProductOut):
     try:
         return update_product_db(product_id, product)
     except HTTPException as e:

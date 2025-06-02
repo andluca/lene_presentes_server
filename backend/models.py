@@ -7,8 +7,17 @@ class UserIn(BaseModel):
     password_hash: str
     role: str
 
-class ProductIn(BaseModel):
+class ProductInDB(BaseModel):
     name: str
     price: float
     category: str
     description: Optional[str] = None
+    image_url: Optional[str] = None
+
+class ProductOut(BaseModel):
+    id: str
+    name: str
+    price: float
+    category: str
+    description: Optional[str] = None
+    image_url: Optional[str] = None

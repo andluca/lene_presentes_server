@@ -1,8 +1,8 @@
 from fastapi import HTTPException,Path
-from db import get_connection
-from models import UserIn
+from backend.db import get_connection
+from backend.models import UserIn
 
-from utils.hash_password import hash_password
+from backend.utils.hash_password import hash_password
 
 def create_user_db(user: UserIn):
     conn = get_connection()

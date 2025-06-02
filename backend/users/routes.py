@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, Path, Depends
-from models import UserIn
+from backend.models import UserIn
 from .crud import create_user_db, list_users_db, get_user_db, delete_user_db
 
 users_router = APIRouter(prefix="/users", tags=["users"])

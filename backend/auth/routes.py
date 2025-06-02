@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 from .jwt import create_access_token
-from users.crud import get_user_by_email
-from utils.hash_password import verify_password
+from backend.users.crud import get_user_by_email
+from backend.utils.hash_password import verify_password
 
 auth_router = APIRouter(prefix="/auth", tags=["auth"])
 

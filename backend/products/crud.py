@@ -1,8 +1,8 @@
 from fastapi import HTTPException,Path
-from db import get_connection
-from models import ProductIn
+from backend.db import get_connection
+from backend.models import ProductInDB
 
-def create_product_db(product: ProductIn):
+def create_product_db(product: ProductInDB):
     conn = get_connection()
     cur = conn.cursor()
     try:
@@ -76,7 +76,7 @@ def delete_all_products_db():
         cur.close()
         conn.close()
 
-def update_product_db(product_id: str, product: ProductIn):
+def update_product_db(product_id: str, product: ProductInDB):
     conn = get_connection()
     cur = conn.cursor()
     try:
