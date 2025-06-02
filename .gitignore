@@ -1,0 +1,31 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Setuptools
+*.egg-info/
+*.dist-info/
+
+# virtualenv
+venv/
+.venv/
+
+# Environment variables
+env/
+.env/
+
+# Log files
+*.log
+
+# Database files
+*.sqlite
+*.db
+
+# Swap files
+*.swp
+
+# macOS system files
+.DS_Store
+.env
