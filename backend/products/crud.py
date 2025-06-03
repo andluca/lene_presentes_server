@@ -21,14 +21,21 @@ def create_product_db(product: ProductInDB):
         cur.close()
         conn.close()
 
-def list_products_db():
+def list_products_db(filters: dict = None):
     conn = get_connection()
     cur = conn.cursor()
-    cur.execute("SELECT * FROM products;")
-    products = cur.fetchall()
-    cur.close()
-    conn.close()
-    return products
+    try:
+        query = "SELECT * FROM products"
+        params = []
+        if filters and filters.get("category"):
+            query += " WHERE category = %s"
+            params.append(filters["category"])
+        cur.execute(query, tuple(params))
+        products = cur.fetchall()
+        return products
+    finally:
+        cur.close()
+        conn.close()
 
 def get_product_db(product_id: str):
     conn = get_connection()

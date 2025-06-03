@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Path, UploadFile, File, Form
+from fastapi import APIRouter, HTTPException, Path, UploadFile, File, Form, Query
 from backend.models import ProductOut, ProductInDB
 from .crud import create_product_db, list_products_db, get_product_db, delete_product_db, delete_all_products_db, update_product_db
 import cloudinary.uploader
@@ -24,9 +24,12 @@ def create_product(category: str = Form(...), name: str = Form(...), price: floa
         raise HTTPException(status_code=400, detail=str(e))
 
 @products_router.get("/", response_model=list[ProductOut])
-def list_products():
+def list_products(category: str = Query(None)):
     try:
-        return list_products_db()
+        filters = {}
+        if category:
+            filters["category"] = category
+        return list_products_db(filters)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 

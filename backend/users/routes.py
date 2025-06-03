@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Path, Depends
+from fastapi import APIRouter, HTTPException, Path
 from backend.models import UserIn
 from .crud import create_user_db, list_users_db, get_user_db, delete_user_db
 
