@@ -14,15 +14,11 @@ async def jwt_middleware(request: Request, call_next):
         "/docs",
         "/openapi.json",
         "/products/",
+        "/products"
     ]
+    is_public = any(request.url.path.startswith(path) for path in public_paths)
 
-    is_public = (
-        request.url.path == "/products/" or
-        request.url.path == "/products" or
-        any(request.url.path.startswith(path) for path in ["/auth/login", "/docs", "/openapi.json"])
-    )
-
-    if request.method == "GET" and is_public:
+    if is_public:
         return await call_next(request)
 
     auth_header = request.headers.get("Authorization")
