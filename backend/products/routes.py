@@ -29,7 +29,15 @@ def list_products(category: str = Query(None)):
         filters = {}
         if category:
             filters["category"] = category
-        return list_products_db(filters)
+        products = list_products_db(filters)
+        return [ProductOut(
+            id=prod[0],
+            name=prod[1],
+            price=prod[2],
+            category=prod[3],
+            image_url=prod[4],
+            description=prod[5]
+        ) for prod in products]
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
