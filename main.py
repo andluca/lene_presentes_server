@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
 from starlette.responses import JSONResponse
 from backend.auth.jwt import verify_token
 from backend.auth.routes import auth_router
@@ -6,6 +7,14 @@ from backend.users.routes import users_router
 from backend.products.routes import products_router
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.middleware("http")
 async def jwt_middleware(request: Request, call_next):
