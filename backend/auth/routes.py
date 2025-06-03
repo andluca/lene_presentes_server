@@ -10,9 +10,9 @@ def authenticate_user(email: str, password: str):
     user = get_user_by_email(email)
     if not user:
         return None
-    password_hash = user['password_hash']
+    password_hash = user[3]
     if verify_password(password, password_hash):
-        return {"email": user['email'], "role": user['role']}
+        return {"email": user[2], "role": user[4]}
     return None
 
 @auth_router.post("/login")
