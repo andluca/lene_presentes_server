@@ -7,10 +7,10 @@ def create_product_db(product: ProductInDB):
     cur = conn.cursor()
     try:
         cur.execute("""
-            INSERT INTO products (name, price, category, description)
-            VALUES (%s, %s, %s, %s)
+            INSERT INTO products (name, price, category, description, image_url)
+            VALUES (%s, %s, %s, %s, %s)
             RETURNING *;
-        """, (product.name, product.price, product.category, product.description))
+        """, (product.name, product.price, product.category, product.description, product.image_url))
         new_product = cur.fetchone()
         conn.commit()
         return new_product

@@ -19,7 +19,16 @@ def create_product(category: str = Form(...), name: str = Form(...), price: floa
             image_url=image_url
         )
 
-        return create_product_db(novo_produto)
+        prod = create_product_db(novo_produto)
+
+        return ProductOut(
+            id=prod[0],
+            name=prod[1],
+            price=prod[2],
+            category=prod[3],
+            description=prod[4],
+            image_url=prod[5]
+        )
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
