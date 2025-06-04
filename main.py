@@ -5,8 +5,7 @@ from backend.auth.jwt import verify_token
 from backend.auth.routes import auth_router
 from backend.users.routes import users_router
 from backend.products.routes import products_router
-import os
-from dotenv import load_dotenv
+import backend.config
 
 app = FastAPI()
 
@@ -18,9 +17,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-load_dotenv()
-
-print("Configuring Cloudinary...", os.getenv('CLOUDINARY_NAME'), "\n", os.getenv('CLOUDINARY_API_KEY'), "\n", os.getenv('CLOUDINARY_API_SECRET'))
 
 @app.middleware("http")
 async def jwt_middleware(request: Request, call_next):
