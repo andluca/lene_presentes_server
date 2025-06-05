@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, Path, UploadFile, File, Form, Query
-from backend.models import ProductOut, ProductInDB
+from backend.models import ProductOut, ProductInDB, MessageResponse
 from .crud import create_product_db, list_products_db, get_product_db, delete_product_db, delete_all_products_db, update_product_db
 import cloudinary.uploader
 
@@ -59,7 +59,7 @@ def get_product(product_id: str = Path(...)):
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
     
-@products_router.delete("/{product_id}")
+@products_router.delete("/{product_id}", response_model=MessageResponse)
 def delete_product(product_id: str = Path(...)):
     try:
         return delete_product_db(product_id)
