@@ -21,7 +21,6 @@ def create_product(category: str = Form(...), name: str = Form(...), price: floa
 
         prod = create_product_db(novo_produto)
 
-        print(prod)
         return ProductOut(
             id=prod[0],
             name=prod[1],
