@@ -45,8 +45,8 @@ def list_products(category: str = Query(None)):
             name=prod[1],
             price=prod[2],
             category=prod[3],
-            image_url=prod[4],
-            description=prod[5]
+            description=prod[4],
+            image_url=prod[5],
         ) for prod in products]
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
