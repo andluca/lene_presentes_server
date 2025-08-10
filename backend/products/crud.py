@@ -5,7 +5,6 @@ from backend.models import ProductInDB
 def create_product_db(product: ProductInDB):
     conn = get_connection()
     cur = conn.cursor()
-    print(product)
     try:
         cur.execute("""
             INSERT INTO products (name, price, category, description, image_url)
